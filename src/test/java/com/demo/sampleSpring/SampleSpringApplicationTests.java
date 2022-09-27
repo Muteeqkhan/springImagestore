@@ -8,6 +8,5 @@ class SampleSpringApplicationTests {
 
 	@Test
 	void contextLoads() {
-	}
-
+	}//made few changes
 }
