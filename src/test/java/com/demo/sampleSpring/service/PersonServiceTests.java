@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,10 +26,16 @@ public class PersonServiceTests {
 	
 	@InjectMocks
 	PersonImplementation implementation;
+	static AddNewPersonRequest	 addNewPersonRequest=null;
+	
+	@BeforeAll
+	static void setup(){
+		addNewPersonRequest=new AddNewPersonRequest("muteeq", "khan", "mysore");
+	}
+	
 	
 	@Test
 	public void addNewPersonPositive() {
-		AddNewPersonRequest addNewPersonRequest=new AddNewPersonRequest("muteeq", "khan", "mysore");
 		when(personRepository.findByPersonName(any())).thenReturn(null);
 		String addNewPerson = implementation.addNewPerson(addNewPersonRequest);
 		assertEquals("useradded sucessfully", addNewPerson);
@@ -36,9 +43,10 @@ public class PersonServiceTests {
 	
 	@Test
 	public void addNewPersonNegative() {
-		AddNewPersonRequest addNewPersonRequest=new AddNewPersonRequest("muteeq", "khan", "mysore");
 		when(personRepository.findByPersonName(any())).thenReturn(new Person());
 		assertThrows(RuntimeException.class, ()->implementation.addNewPerson(addNewPersonRequest));
 		}
+	
+	
 	
 }
